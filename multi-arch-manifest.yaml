@@ -1,0 +1,11 @@
+image: egofelix/servercow:latest
+manifests:
+  - image: egofelix/servercow:latest-amd64
+    platform:
+      architecture: amd64
+      os: linux
+  - image: egofelix/servercow:latest-arm32v7
+    platform:
+      architecture: arm
+      os: linux
+      variant: v7
