@@ -51,6 +51,9 @@ while true; do
       updateRecord "AAAA" ${HOSTNAME} ${DOMAIN} ${IPV6};
     fi;
   done;
+
+  # Sleep 30 seconds
+  sleep 30;
 done;
 
 
