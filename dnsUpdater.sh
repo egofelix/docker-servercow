@@ -48,16 +48,14 @@ while true; do
   IPV4=$(curl --silent ifconfig.me)
   IPV6=$(LANG=C ip addr list | grep 'inet6' | grep 'global' | awk '{print $2}' | awk -F'/' '{print $1}')
 
+  # Loop over domains
   for DOMAIN in ${DOMAINS}
   do
-    if [[ ! -z "${IPV4}" ]] && [[ isTrue ${UPDATE_IPV4} ]]; then
+    if [ [ ! -z "${IPV4}" ] && [ isTrue "${UPDATE_IPV4}" ] ]; then
       updateRecord "A" ${HOSTNAME} ${DOMAIN} ${IPV4};
     fi;
-    if [[ ! -z "${IPV4}" ]] && [[ isTrue ${UPDATE_IPV6} ]]; then
+    if [ [ ! -z "${IPV4}" ] && [ isTrue "${UPDATE_IPV6}" ] ]; then
       updateRecord "AAAA" ${HOSTNAME} ${DOMAIN} ${IPV6};
-    fi;
-    if [[ isTrue ${UPDATE_SSHFP} ]]; then
-
     fi;
   done;
 
