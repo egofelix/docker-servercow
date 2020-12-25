@@ -51,10 +51,10 @@ while true; do
   # Loop over domains
   for DOMAIN in ${DOMAINS}
   do
-    if [ [ ! -z "${IPV4}" ] && [ isTrue "${UPDATE_IPV4}" ] ]; then
+    if isTrue ${UPDATE_IPV4} && [[ ! -z "${IPV4}" ]]; then
       updateRecord "A" ${HOSTNAME} ${DOMAIN} ${IPV4};
     fi;
-    if [ [ ! -z "${IPV4}" ] && [ isTrue "${UPDATE_IPV6}" ] ]; then
+    if isTrue ${UPDATE_IPV6} && [[ ! -z "${IPV6}" ]]; then
       updateRecord "AAAA" ${HOSTNAME} ${DOMAIN} ${IPV6};
     fi;
   done;
@@ -62,5 +62,3 @@ while true; do
   # Sleep 30 seconds
   sleep 30;
 done;
-
-
