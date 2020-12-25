@@ -30,25 +30,34 @@ if [[ -z ${TTL:-} ]]; then
   TTL="60";
 fi;
 if [[ -z ${QUIET:-} ]]; then
-  QUIET="false"
+  QUIET="false";
+fi;
+if [[ -z ${UPDATE_IPV4:-} ]]; then
+  UPDATE_IPV4="true";
+fi;
+if [[ -z ${UPDATE_IPV6:-} ]]; then
+  UPDATE_IPV6="true";
 fi;
 
 # Trim Hostname (if it contains any .)
 HOSTNAME=$(echo "${HOSTNAME}" | awk -F'.' '{print $1}')
 
-# Get current IPs
-IPV4=$(curl --silent ifconfig.me)
-IPV6=$(LANG=C ip addr list | grep 'inet6' | grep 'global' | awk '{print $2}' | awk -F'/' '{print $1}')
-
 # Main Loop
 while true; do
+  # Get current IPs
+  IPV4=$(curl --silent ifconfig.me)
+  IPV6=$(LANG=C ip addr list | grep 'inet6' | grep 'global' | awk '{print $2}' | awk -F'/' '{print $1}')
+
   for DOMAIN in ${DOMAINS}
   do
-    if [[ ! -z "${IPV4}" ]]; then
+    if [[ ! -z "${IPV4}" ]] && [[ isTrue ${UPDATE_IPV4} ]]; then
       updateRecord "A" ${HOSTNAME} ${DOMAIN} ${IPV4};
     fi;
-    if [[ ! -z "${IPV6}" ]]; then
+    if [[ ! -z "${IPV4}" ]] && [[ isTrue ${UPDATE_IPV6} ]]; then
       updateRecord "AAAA" ${HOSTNAME} ${DOMAIN} ${IPV6};
+    fi;
+    if [[ isTrue ${UPDATE_SSHFP} ]]; then
+
     fi;
   done;
 
