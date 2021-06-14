@@ -60,7 +60,7 @@ while true; do
 
   # Get current IPs
   IPV4=$(curl --silent ifconfig.me)
-  IPV6=$(LANG=C ip addr list | grep 'inet6' | grep 'global' | awk '{print $2}' | awk -F'/' '{print $1}' | grep -v '2001:')
+  IPV6=$(LANG=C ip addr list | grep 'inet6' | grep 'global' | grep -v 'private' | grep -v 'deprecated' | awk '{print $2}' | awk -F'/' '{print $1}' | grep -v '2001:')
 
   # Loop over hostnames
   for HOST in ${HOSTNAMES}
